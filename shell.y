@@ -20,12 +20,20 @@ Command* currCmd = NULL; SimpleCommand* currSimCmd = NULL;
 %token EOL NOTOKEN
 
 %define api.pure full
+%define parse.error detailed
 
 %%
 command_line:
             /*nothing*/ { printf("$ "); }
             | command_line command EOL { printf("$ "); }
             | command_line EOL { printf("$ "); }
+            | command_line error EOL { 
+                printf("$ ");
+                freeCmd(currCmd);
+                freeSimCmd(currSimCmd);
+                currCmd = NewCmd(); currSimCmd = NewSimCmd();
+                yyerrok;
+            }
             ;
 command:
        pipe_list io_modifier_list background_opt {
@@ -67,11 +75,14 @@ background_opt:
               ;
 %%
 
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
     currCmd = NewCmd(); currSimCmd = NewSimCmd();
-    yyparse();
+
+    int ret = yyparse();
     
     freeCmd(currCmd);
     freeSimCmd(currSimCmd);
+
+    return ret;
 }

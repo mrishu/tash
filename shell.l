@@ -14,7 +14,8 @@
 ">>"        { return GREATGREAT; }
 ">&"        { return GREATAMPERSAND; }
 "&"         { return AMPERSAND; }
-[^ ><&|\t\n][^ ><&|\t\n]* {
+
+[^ ><&|\t\n]+ {
     *yylval = strdup(yytext);
     return WORD;
 }
