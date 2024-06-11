@@ -26,4 +26,5 @@ void print_prompt(){
     printf("\e[1m%c[%dm:\e[m", 0x1B, 0);
     printf("\e[1m%c[%dm%s\e[m", 0x1B, 34, cwd);
     printf("\e[1m%c[%dm$ \e[m", 0x1B, 0);
+    free(cwd);
 }
