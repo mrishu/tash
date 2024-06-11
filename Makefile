@@ -1,5 +1,4 @@
 shell: shell.l shell.y
-	rm -f shell
 	bison -d shell.y
 	flex --bison-bridge shell.l
 	gcc -o $@ -lfl lex.yy.c shell.tab.c
