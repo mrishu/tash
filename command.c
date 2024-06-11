@@ -1,11 +1,3 @@
-#include <unistd.h>   // For pipe(), dup2(), and execvp()
-#include <sys/wait.h>  // For wait() and related macros
-#include <stdio.h>     // For I/O functions
-#include <sys/types.h> // For pid_t type
-#include <stdlib.h>
-#include <fcntl.h>     // For open() function
-#include <string.h>    // For strdup() function
-
 /* Command Data Structure */
 
 // Describes a simple command and arguments
@@ -41,6 +33,8 @@ typedef struct _Command {
     char *inFile;
     char *errFile;
     int background;
+	int out_append;
+	int err_append;
 } Command;
 
 void insertSimpleCommand(Command *Cmd, SimpleCommand *simCmd) {
@@ -63,12 +57,15 @@ Command* NewCmd(){
     Cmd -> outFile = NULL;
     Cmd -> errFile = NULL;
     Cmd -> background = 0;
+	Cmd -> out_append = 0;
+	Cmd -> err_append = 0;
     return Cmd;
 }
 
 void execute(Command *Cmd) {
     int tmpin = dup(0); // Save stdin
     int tmpout = dup(1); // Save stdout
+	int tmperr = dup(2); //Save stderr
 
     int numsimplecommands = Cmd -> num_simCmds;
     SimpleCommand **scmd = Cmd -> simCmds;
@@ -76,6 +73,42 @@ void execute(Command *Cmd) {
     char *outFile = Cmd -> outFile;
     char *errFile = Cmd -> errFile;
     int background = Cmd -> background;
+	int out_append = Cmd ->out_append;
+	int err_append = Cmd ->err_append;
+
+	//********************************************************************
+	//implementing error redirection
+    int err_fd;
+	if(errFile)
+	{
+		if(err_append)
+			err_fd = open(errFile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		else
+			err_fd = open(errFile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	
+	// Redirect stderr to error file
+    if (dup2(err_fd, STDERR_FILENO) == -1) {
+        perror("Error redirecting stderr");
+        exit(EXIT_FAILURE);
+    }}
+	//********************************************************************
+
+    //Implementing cd (change directory)
+    SimpleCommand* first_scmd = scmd[0];
+    if(strcmp(first_scmd -> args[0], "cd")==0){
+        int status = ex_cd(first_scmd -> args[1]);
+        if (status == -1){
+            fprintf(stderr, "error: \"%s\" directory doesn't exist\n", first_scmd -> args[1]);
+        }
+        else if(status == 2){
+            fprintf(stderr,"error: \"%s\" directory is not reachable\n", first_scmd -> args[1]);
+        }
+        return;
+    }
+    // Implementing Exit
+    if(strcmp(first_scmd -> args[0], "exit") == 0){
+        ex_exit();
+    }
 
     // Set up initial input
     int fdin;
@@ -99,8 +132,12 @@ void execute(Command *Cmd) {
 
         // Setup output
         if (i == numsimplecommands - 1) {
-            if (outFile) {
-                fdout = open(outFile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            if (outFile)
+                {
+				if(out_append)
+				{fdout = open(outFile, O_WRONLY | O_CREAT | O_APPEND, 0644);}
+				else
+                {fdout = open(outFile, O_WRONLY | O_CREAT | O_TRUNC, 0644);}
                 if (fdout < 0) {
                     perror("open output file");
                     exit(EXIT_FAILURE);
@@ -135,8 +172,15 @@ void execute(Command *Cmd) {
 
     dup2(tmpin, 0);
     dup2(tmpout, 1);
+    dup2(tmperr, 2);
+
     close(tmpin);
     close(tmpout);
+    close(tmperr);
+    if(errFile)
+    {
+        close(err_fd);
+    }
 
     if (!background) {
         waitpid(ret, NULL, 0);
@@ -152,6 +196,11 @@ void freeCmd(Command *Cmd){
         free(Cmd -> simCmds[i]);
     }
     free(Cmd -> simCmds);
+    free(Cmd->inFile);
+    free(Cmd->outFile);
+    free(Cmd->errFile);
+    Cmd->out_append=0;
+    Cmd->err_append=0;
     free(Cmd);
 }
 

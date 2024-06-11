@@ -1,5 +1,4 @@
 %{
-#include <string.h>
 #include "shell.tab.h"
 
 #define YYSTYPE char*
