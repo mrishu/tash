@@ -7,6 +7,7 @@ char* cwd_home_tilde(char *cwd) {
         }
     }
     char* cwd_final = (char *)malloc((MAX_PATH_LEN + 1) * sizeof(char));
+    *cwd_final = '~'; *(cwd_final + 1) = '\0';
     strcat(cwd_final, cwd);
     free(cwd_orig);
     return cwd_final;
