@@ -6,15 +6,15 @@
 %}
 
 %%
-\n          { return EOL; }
-[ \t]       { /* Discard spaces and tabs */ }
-">"         { return GREAT; }
-"<"         { return LESS; }
-"|"         { return PIPE; }
-">>"        { return GREATGREAT; }
-">&"        { return GREATAMPERSAND; }
-"&"         { return AMPERSAND; }
-
+\n           { return EOL; }
+[ \t]        { /* Discard spaces and tabs */ }
+"|"          { return PIPE; }
+">"          { return GREAT; }
+"<"          { return LESS; }
+">>"         { return GREATGREAT; }
+"&>"         { return AMPERSANDGREAT; }
+"&>>"        { return AMPERSANDGREATGREAT; }
+"&"          { return AMPERSAND; }
 [^ ><&|\t\n]+ {
     *yylval = strdup(yytext);
     return WORD;

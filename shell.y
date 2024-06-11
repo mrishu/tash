@@ -15,8 +15,9 @@ Command* currCmd = NULL; SimpleCommand* currSimCmd = NULL;
 
 /* declare tokens */
 %token WORD 
-%token GREAT LESS PIPE
-%token GREATGREAT GREATAMPERSAND GREATGREATAMPERSAND AMPERSAND 
+%token PIPE
+%token GREAT LESS GREATGREAT AMPERSANDGREAT AMPERSANDGREATGREAT
+%token AMPERSAND 
 %token EOL NOTOKEN
 
 %define api.pure full
@@ -50,8 +51,8 @@ io_modifier:
            GREAT WORD { currCmd -> outFile = $2; }
            | LESS WORD { currCmd -> inFile = $2; }
            | GREATGREAT WORD
-           | GREATAMPERSAND WORD
-           | GREATGREATAMPERSAND WORD
+           | AMPERSANDGREAT WORD { currCmd -> errFile = $2; }
+           | AMPERSANDGREATGREAT WORD
            ;
 pipe_list:
          pipe_list PIPE cmd_and_args {
