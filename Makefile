@@ -1,4 +1,4 @@
-shell: shell.l shell.y
+shell: shell.l shell.y shell_utils.c shell_builtins.c
 	bison -d shell.y
 	flex --bison-bridge shell.l
 	gcc -o $@ -lfl lex.yy.c shell.tab.c
