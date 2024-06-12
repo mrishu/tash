@@ -3,7 +3,6 @@
 #include "shell_builtins.c"
 #include "command.c"
 #include "shell_utils.c"
-
 #define YYSTYPE char*
 int yylex(YYSTYPE* yylval);
 
@@ -82,7 +81,8 @@ background_opt:
 int main(int argc, char **argv)
 {
     currCmd = NewCmd(); currSimCmd = NewSimCmd();
-
+    
+    printf("\033[1;31mWelcome \033[34mto \033[35mTash\033[0m\033[33m !!\033[0m\n");
     int ret = yyparse();
     
     freeCmd(currCmd);
