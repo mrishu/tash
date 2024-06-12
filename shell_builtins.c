@@ -24,6 +24,6 @@ int ex_cd(char *rel_path)  // Returns 1 if everything done correctly, -1 if the 
 
 void ex_exit(void)
 {
-    printf("Bye bye!\n");
+    printf("Bye bye Tash!\n");
     exit(0);
 }

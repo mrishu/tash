@@ -22,3 +22,5 @@ make
 - Aditya Dutta
 - Shince K. Baby
 - Tanmay Karmakar
+
+We have named the shell `tash` (stands for **T**anmay, **A**ditya and **Sh**ince).
