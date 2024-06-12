@@ -4,6 +4,13 @@ This project is part of the Operating Systems course offered to us ISI Kolkata i
 
 We used GNU `flex` as the lexer and GNU `bison` as the parser for this project. This helped me learn about the inner workings of the shell as well as basics of `flex` and `bison`.
 
+## Instructions
+```
+sudo apt install flex bison
+make
+./shell
+```
+
 ## Requirements
 `flex`, `bison`, `gcc`, `make`
 
