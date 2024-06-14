@@ -28,3 +28,6 @@ void print_prompt(){
     printf("\e[1m%c[%dm$ \e[m", 0x1B, 0);
     free(cwd);
 }
+void welcome_msg(void){
+    printf("\033[1;31mWelcome \033[34mto \033[35mTash\033[0m\033[33m !!\033[0m\n");
+}
