@@ -1,4 +1,4 @@
-# os-shell
+# tash
 Simple Shell written in C for OS Project.  
 This project is part of the Operating Systems course offered to us ISI Kolkata in Spring Semester, 2024, taught to us by Prof. Mandar Mitra.
 
