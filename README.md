@@ -12,6 +12,7 @@ make
 ./shell
 ```
 
+## Format of command
 The basic format of a command is:
 ```
 a1 | a2 | ... | an < inFile >outFile &>errFile
