@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 {
     currCmd = NewCmd(); currSimCmd = NewSimCmd();
     
-    printf("\033[1;31mWelcome \033[34mto \033[35mTash\033[0m\033[33m !!\033[0m\n");
+    welcome_msg();
     int ret = yyparse();
     
     freeCmd(currCmd);
