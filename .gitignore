@@ -1,5 +1,4 @@
 lex.yy.c
 shell.tab.h
 shell.tab.c
-test
-shell
+tash

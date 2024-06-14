@@ -9,7 +9,7 @@ This helped us learn about the inner workings of the shell as well as basics of 
 ```
 sudo apt install flex bison
 make
-./shell
+./tash
 ```
 
 ## Format of command
@@ -27,8 +27,8 @@ Also, `>>outFile` and `&>>errFile` are also supported for appending to output or
 - https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
 
 ## Team Members
-- Aditya Dutta (https://github.com/mrishu)
-- Shince K. Baby (https://github.com/vazhipokkan)
-- Tanmay Karmakar (https://github.com/Tanmay-Karmakar)
+- Aditya Dutta     (https://github.com/mrishu)
+- Shince K. Baby   (https://github.com/vazhipokkan)
+- Tanmay Karmakar  (https://github.com/Tanmay-Karmakar)
 
 We have named the shell `tash` (stands for **T**anmay, **A**ditya and **Sh**ince).
