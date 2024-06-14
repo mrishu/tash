@@ -12,6 +12,13 @@ make
 ./shell
 ```
 
+The basic format of a command is:
+```
+a1 | a2 | ... | an < inFile >outFile &>errFile
+```
+`inFile` would be provided as input to command `a1` and the final output will be redirected to `outFile`. Also, the error would be redirected to `errFile`.  
+Also, `>>outFile` and `&>>errFile` are also supported for appending to output or error files.
+
 ## Requirements
 `flex`, `bison`, `gcc`, `make`
 
