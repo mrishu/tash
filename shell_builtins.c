@@ -1,10 +1,15 @@
-// Returns 1 if everything done correctly,
+// Returns 0 if everything done correctly,
 // -1 if the given directory does not exist,
 // 2 if directory exists but not reachable
 int ex_cd(char *rel_path) {
     // If the user types 'cd ~' or 'cd' then change the directory to home directory
-    if((rel_path == NULL) || (*rel_path == '~')){
+    if (rel_path == NULL){
         rel_path = getenv("HOME");
+    }
+    else if (*rel_path == '~') {
+        char *home = strdup(getenv("HOME"));
+        strcat(home, rel_path+1);
+        rel_path = home;
     }
 
     // Check whether the directory exists or not

@@ -24,7 +24,7 @@ void print_prompt(){
 
     printf("\e%s%c%s%s@%s\e%s", BOLD, AND, GREEN, username, hostname, ENDF);
     printf("\e%s:\e%s", BOLD, ENDF);
-    printf("\e%s%c%s%s\e%s", BOLD, AND, BLUE, cwd, ENDF);
+    printf("\e%s%s\e%s", BLUE, cwd, ENDF);
     printf("$ ");
     free(cwd);
 }
