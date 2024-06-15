@@ -6,12 +6,11 @@
 #define YYSTYPE char*
 int yylex(YYSTYPE* yylval);
 
-void yyerror(const char *s)
-{
+void yyerror(const char *s) {
     fprintf(stderr, "error: %s\n", s);
 }
 
-Command* currCmd = NULL; SimpleCommand* currSimCmd = NULL;
+Command *currCmd = NULL; SimpleCommand *currSimCmd = NULL;
 %}
 
 /* declare tokens */

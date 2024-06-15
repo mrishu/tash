@@ -1,5 +1,7 @@
-int ex_cd(char *rel_path)  // Returns 1 if everything done correctly, -1 if the given directory does not exist, 2 if directory exists but not reachable
-{
+// Returns 1 if everything done correctly,
+// -1 if the given directory does not exist,
+// 2 if directory exists but not reachable
+int ex_cd(char *rel_path) {
     // If the user types 'cd ~' or 'cd' then change the directory to home directory
     if((rel_path == NULL) || (*rel_path == '~')){
         rel_path = getenv("HOME");
@@ -22,8 +24,7 @@ int ex_cd(char *rel_path)  // Returns 1 if everything done correctly, -1 if the 
     return 0;
 }
 
-void ex_exit(void)
-{
+void ex_exit(void) {
     printf("Bye bye Tash!\n");
     exit(0);
 }

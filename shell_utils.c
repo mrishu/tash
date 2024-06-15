@@ -1,4 +1,4 @@
-char* cwd_home_tilde(char *cwd) {
+char *cwd_home_tilde(char *cwd) {
     char *cwd_orig = cwd;
     char *home = getenv("HOME");
     while (*home != '\0') {
@@ -6,7 +6,7 @@ char* cwd_home_tilde(char *cwd) {
             return cwd_orig;
         }
     }
-    char* cwd_final = (char *)malloc((MAX_PATH_LEN + 1) * sizeof(char));
+    char *cwd_final = (char *)malloc((MAX_PATH_LEN + 1) * sizeof(char));
     *cwd_final = '~'; *(cwd_final + 1) = '\0';
     strcat(cwd_final, cwd);
     free(cwd_orig);
@@ -14,7 +14,7 @@ char* cwd_home_tilde(char *cwd) {
 }
 
 void print_prompt(){
-    char* cwd = (char *)malloc((MAX_PATH_LEN + 1) * sizeof(char));
+    char *cwd = (char *)malloc((MAX_PATH_LEN + 1) * sizeof(char));
     getcwd(cwd, MAX_PATH_LEN);
     char *username = getenv("USER");
     char hostname[HOST_NAME_MAX + 1];
