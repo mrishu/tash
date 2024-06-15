@@ -7,8 +7,10 @@ int ex_cd(char *rel_path) {
         rel_path = getenv("HOME");
     }
     else if (*rel_path == '~') {
-        char *home = strdup(getenv("HOME"));
+        char *home = (char *)malloc(sizeof(char) * (strlen(getenv("HOME")) + strlen(rel_path) + 1));
+        strcpy(home, getenv("HOME"));
         strcat(home, rel_path+1);
+        free(rel_path);
         rel_path = home;
     }
 

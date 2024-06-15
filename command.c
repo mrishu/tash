@@ -7,7 +7,7 @@ typedef struct _SimpleCommand {
 } SimpleCommand;
 
 void insertArgument(SimpleCommand *simCmd, char *argument) {
-    simCmd -> args = realloc(simCmd -> args, sizeof(char *) * (simCmd -> num_args + 1));
+    simCmd -> args = (char **)realloc(simCmd -> args, sizeof(char *) * (simCmd -> num_args + 1));
     if (!simCmd -> args) {
         perror("realloc");
         exit(EXIT_FAILURE);
@@ -16,7 +16,7 @@ void insertArgument(SimpleCommand *simCmd, char *argument) {
 }
 
 SimpleCommand *NewSimCmd(){
-    SimpleCommand *SimCmd = malloc(sizeof(SimpleCommand));
+    SimpleCommand *SimCmd = (SimpleCommand *)malloc(sizeof(SimpleCommand));
     if (!SimCmd) {
         perror("malloc");
     }
@@ -38,7 +38,7 @@ typedef struct _Command {
 } Command;
 
 void insertSimpleCommand(Command *Cmd, SimpleCommand *simCmd) {
-    Cmd -> simCmds = realloc(Cmd -> simCmds, sizeof(SimpleCommand *) * (Cmd -> num_simCmds + 1));
+    Cmd -> simCmds = (SimpleCommand **)realloc(Cmd -> simCmds, sizeof(SimpleCommand *) * (Cmd -> num_simCmds + 1));
     if (!Cmd -> simCmds) {
         perror("realloc");
         exit(EXIT_FAILURE);
@@ -47,7 +47,7 @@ void insertSimpleCommand(Command *Cmd, SimpleCommand *simCmd) {
 }
 
 Command *NewCmd(){
-    Command *Cmd = malloc(sizeof(Command));
+    Command *Cmd = (Command *)malloc(sizeof(Command));
     if (!Cmd) {
         perror("malloc");
     }
