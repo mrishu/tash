@@ -8,3 +8,20 @@
 #include <sys/wait.h>
 
 #define MAX_PATH_LEN 500
+
+#define BOLD "[1m"
+#define RED "[31m"
+#define GREEN "[32m"
+#define YELLOW "[33m"
+#define BLUE "[34m"
+#define MAGENTA "[35m"
+#define CYAN "[36m"
+#define WHITE "[37m"
+#define BRED "[91m"
+#define BGREEN "[92m"
+#define BYELLOW "[93m"
+#define BBLUE "[94m"
+#define BMAGENTA "[95m"
+#define BCYAN "[96m"
+#define ENDF "[0m"
+#define AND 0x1B

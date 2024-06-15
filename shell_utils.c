@@ -22,12 +22,16 @@ void print_prompt(){
     
     cwd = cwd_home_tilde(cwd);
 
-    printf("\e[1m%c[%dm%s@%s\e[m", 0x1B, 32, username, hostname);
-    printf("\e[1m%c[%dm:\e[m", 0x1B, 0);
-    printf("\e[1m%c[%dm%s\e[m", 0x1B, 34, cwd);
-    printf("\e[1m%c[%dm$ \e[m", 0x1B, 0);
+    printf("\e%s%c%s%s@%s\e%s", BOLD, AND, GREEN, username, hostname, ENDF);
+    printf("\e%s:\e%s", BOLD, ENDF);
+    printf("\e%s%c%s%s\e%s", BOLD, AND, BLUE, cwd, ENDF);
+    printf("$ ", BOLD, AND, WHITE, ENDF);
     free(cwd);
 }
+
 void welcome_msg(void){
-    printf("\033[1;31mWelcome \033[34mto \033[35mTash\033[0m\033[33m !!\033[0m\n");
+    printf("\e%s%c%sWelcome \e%s", BOLD, AND, RED, ENDF);
+    printf("\e%s%c%sto \e%s", BOLD, AND, YELLOW, ENDF);
+    printf("\e%s%c%sTash \e%s", BOLD, AND, GREEN, ENDF);
+    printf("\e%s%c%s!!\e%s\n", BOLD, AND, BLUE, ENDF);
 }
