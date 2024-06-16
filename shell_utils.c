@@ -22,16 +22,16 @@ void print_prompt(){
     
     cwd = cwd_home_tilde(cwd);
 
-    printf("\e%s%c%s%s@%s\e%s", BOLD, AND, GREEN, username, hostname, ENDF);
-    printf("\e%s:\e%s", BOLD, ENDF);
-    printf("\e%s%s\e%s", BLUE, cwd, ENDF);
+    printf("\e%s%c%s%s@%s\e%s", BOLD, AND, GREEN, username, hostname, RESET);
+    printf("\e%s:\e%s", BOLD, RESET);
+    printf("\e%s%s\e%s", BLUE, cwd, RESET);
     printf("$ ");
     free(cwd);
 }
 
 void welcome_msg(void){
-    printf("\e%s%c%sWelcome \e%s", BOLD, AND, RED, ENDF);
-    printf("\e%s%c%sto \e%s", BOLD, AND, YELLOW, ENDF);
-    printf("\e%s%c%sTash \e%s", BOLD, AND, GREEN, ENDF);
-    printf("\e%s%c%s!!\e%s\n", BOLD, AND, BLUE, ENDF);
+    printf("\e%s%c%sWelcome \e%s", BOLD, AND, RED, RESET);
+    printf("\e%s%c%sto \e%s", BOLD, AND, YELLOW, RESET);
+    printf("\e%s%c%sTash \e%s", BOLD, AND, GREEN, RESET);
+    printf("\e%s%c%s!!\e%s\n", BOLD, AND, BLUE, RESET);
 }

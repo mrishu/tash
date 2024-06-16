@@ -9,7 +9,10 @@
 
 #define MAX_PATH_LEN 500
 
+#define RESET "[0m"
 #define BOLD "[1m"
+#define ITALIC "[3m"
+#define UNDERLINE "[4m"
 #define RED "[31m"
 #define GREEN "[32m"
 #define YELLOW "[33m"
@@ -23,5 +26,4 @@
 #define BBLUE "[94m"
 #define BMAGENTA "[95m"
 #define BCYAN "[96m"
-#define ENDF "[0m"
 #define AND 0x1B
