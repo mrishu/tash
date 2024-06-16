@@ -202,11 +202,9 @@ void freeCmd(Command *Cmd){
         free(Cmd -> simCmds[i]);
     }
     free(Cmd -> simCmds);
-    free(Cmd->inFile);
-    free(Cmd->outFile);
-    free(Cmd->errFile);
-    Cmd->out_append=0;
-    Cmd->err_append=0;
+    free(Cmd -> inFile);
+    free(Cmd -> outFile);
+    free(Cmd -> errFile);
     free(Cmd);
 }
 
