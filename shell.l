@@ -12,7 +12,7 @@
         *(yytext + strlen(yytext) - 1) = '\0'; // replace end quotes with \0
         yytext = yytext + 1; // move pointer of yytext one step ahead of starting quotes
     }
-    *yylval = strdup(yytext); // this needs to be freed
+    *yylval = strdup(yytext); // duplicate the matched text to yylval, this needs to be freed later
     return WORD;
 }
 "|"          { return PIPE; }
