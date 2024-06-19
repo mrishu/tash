@@ -47,11 +47,11 @@ io_modifier_list:
                 | /*empty*/
                 ;
 io_modifier:
-           GREAT WORD { currCmd -> outFile = $2; }
-           | LESS WORD { currCmd -> inFile = $2; }
-           | GREATGREAT WORD { currCmd -> outFile = $2; currCmd -> out_append =1;}
-           | AMPERSANDGREAT WORD { currCmd -> errFile = $2; }
-           | AMPERSANDGREATGREAT WORD { currCmd -> errFile = $2; currCmd -> err_append =1;}
+           LESS WORD { currCmd -> inFile = $2; }
+           | GREAT WORD { currCmd -> outFile = $2; currCmd -> out_append = 0; }
+           | GREATGREAT WORD { currCmd -> outFile = $2; currCmd -> out_append = 1;}
+           | AMPERSANDGREAT WORD { currCmd -> errFile = $2; currCmd -> err_append = 0; }
+           | AMPERSANDGREATGREAT WORD { currCmd -> errFile = $2; currCmd -> err_append = 1;}
            ;
 pipe_list:
          pipe_list PIPE cmd_and_args {

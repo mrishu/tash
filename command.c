@@ -84,7 +84,7 @@ void execute(Command *Cmd) {
             fprintf(stderr, "error: \"%s\" directory doesn't exist!\n", first_scmd -> args[1]);
         }
         else if(status == 2) {
-            fprintf(stderr,"error: \"%s\" directory is not reachable!\n", first_scmd -> args[1]);
+            fprintf(stderr, "error: \"%s\" directory is not reachable!\n", first_scmd -> args[1]);
         }
         return;
     }
@@ -103,6 +103,10 @@ void execute(Command *Cmd) {
         else {
             fderr = open(errFile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
         }
+        if (fderr < 0) {
+            perror("cannot open error file");
+            exit(EXIT_FAILURE);
+        }
         dup2(fderr, STDERR_FILENO);
     }
 
@@ -111,7 +115,7 @@ void execute(Command *Cmd) {
     if (inFile) {
         fdin = open(inFile, O_RDONLY);
         if (fdin < 0) {
-            perror("open input file");
+            perror("cannot open input file");
             exit(EXIT_FAILURE);
         }
     } 
@@ -138,7 +142,7 @@ void execute(Command *Cmd) {
                     fdout = open(outFile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
                 }
                 if (fdout < 0) {
-                    perror("open output file");
+                    perror("cannot open output file");
                     exit(EXIT_FAILURE);
                 }
             }
