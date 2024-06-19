@@ -4,10 +4,10 @@
 int ex_cd(char *rel_path) {
     // If the user types 'cd ~' or 'cd' then change the directory to home directory
     char flag = 0;
-    if (rel_path == NULL || strcmp(rel_path, "~") == 0) {
+    if (rel_path == NULL) {
         rel_path = getenv("HOME");
     }
-    else if (*rel_path == '~' && *(rel_path + 1) == '/') {
+    else if (strcmp(rel_path, "~") == 0 || (*rel_path == '~' && *(rel_path + 1) == '/')) {
         char *home = (char *)malloc(sizeof(char) * (strlen(getenv("HOME")) + strlen(rel_path) + 1));
         strcpy(home, getenv("HOME"));
         strcat(home, rel_path+1);

@@ -1,3 +1,4 @@
+// if cwd starts with /home/user (or $HOME), then it replaces that with ~
 char *cwd_home_tilde(char *cwd) {
     char *cwd_orig = cwd;
     char *home = getenv("HOME");
@@ -7,12 +8,13 @@ char *cwd_home_tilde(char *cwd) {
         }
     }
     char *cwd_final = (char *)malloc((MAX_PATH_LEN + 1) * sizeof(char));
-    *cwd_final = '~'; *(cwd_final + 1) = '\0';
+    strcpy(cwd_final, "~");
     strcat(cwd_final, cwd);
     free(cwd_orig);
     return cwd_final;
 }
 
+// prints prompt in the format user@hostname:/path/to/cwd
 void print_prompt(){
     char *cwd = (char *)malloc((MAX_PATH_LEN + 1) * sizeof(char));
     getcwd(cwd, MAX_PATH_LEN);
@@ -32,6 +34,6 @@ void print_prompt(){
 void welcome_msg(void){
     printf("\e%s%c%sWelcome \e%s", BOLD, AND, RED, RESET);
     printf("\e%s%c%sto \e%s", BOLD, AND, YELLOW, RESET);
-    printf("\e%s%c%sTash \e%s", BOLD, AND, GREEN, RESET);
+    printf("\e%s%c%sTash\e%s", BOLD, AND, GREEN, RESET);
     printf("\e%s%c%s!!\e%s\n", BOLD, AND, BLUE, RESET);
 }

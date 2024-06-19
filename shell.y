@@ -7,7 +7,7 @@
 int yylex(YYSTYPE* yylval);
 
 void yyerror(const char *s) {
-    fprintf(stderr, "error: %s\n", s);
+    fprintf(stderr, "Syntax error: %s\n", s);
 }
 
 Command *currCmd = NULL; SimpleCommand *currSimCmd = NULL;
@@ -25,13 +25,12 @@ Command *currCmd = NULL; SimpleCommand *currSimCmd = NULL;
 
 %%
 command_line:
-            /*nothing*/ { print_prompt();}
+            /*empty*/ { print_prompt(); }
             | command_line command EOL { print_prompt(); }
             | command_line EOL { print_prompt(); }
             | command_line error EOL { 
+                freeCmd(currCmd); freeSimCmd(currSimCmd);
                 print_prompt();
-                freeCmd(currCmd);
-                freeSimCmd(currSimCmd);
                 currCmd = NewCmd(); currSimCmd = NewSimCmd();
                 yyerrok;
             }
@@ -39,8 +38,7 @@ command_line:
 command:
        pipe_list io_modifier_list background_opt {
             execute(currCmd);
-            freeCmd(currCmd);
-            freeSimCmd(currSimCmd);
+            freeCmd(currCmd); freeSimCmd(currSimCmd);
             currCmd = NewCmd(); currSimCmd = NewSimCmd();
        }
        ;
@@ -51,9 +49,9 @@ io_modifier_list:
 io_modifier:
            GREAT WORD { currCmd -> outFile = $2; }
            | LESS WORD { currCmd -> inFile = $2; }
-           | GREATGREAT WORD {currCmd -> outFile = $2; currCmd -> out_append =1;}
+           | GREATGREAT WORD { currCmd -> outFile = $2; currCmd -> out_append =1;}
            | AMPERSANDGREAT WORD { currCmd -> errFile = $2; }
-           | AMPERSANDGREATGREAT WORD {currCmd->errFile = $2; currCmd -> err_append =1;}
+           | AMPERSANDGREATGREAT WORD { currCmd -> errFile = $2; currCmd -> err_append =1;}
            ;
 pipe_list:
          pipe_list PIPE cmd_and_args {
@@ -77,15 +75,10 @@ background_opt:
               ;
 %%
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     currCmd = NewCmd(); currSimCmd = NewSimCmd();
-    
     welcome_msg();
-    int ret = yyparse();
-    
-    freeCmd(currCmd);
-    freeSimCmd(currSimCmd);
-
-    return ret;
+    yyparse();
+    freeCmd(currCmd); freeSimCmd(currSimCmd);
+    return 0;
 }

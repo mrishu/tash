@@ -63,9 +63,9 @@ Command *NewCmd(){
 }
 
 void execute(Command *Cmd) {
-    int tmpin = dup(0); // Save stdin
-    int tmpout = dup(1); // Save stdout
-    int tmperr = dup(2); //Save stderr
+    int tmpin = dup(STDIN_FILENO); // Save stdin
+    int tmpout = dup(STDOUT_FILENO); // Save stdout
+    int tmperr = dup(STDERR_FILENO); //Save stderr
 
     int numsimplecommands = Cmd -> num_simCmds;
     SimpleCommand **scmd = Cmd -> simCmds;
@@ -76,24 +76,7 @@ void execute(Command *Cmd) {
     int out_append = Cmd -> out_append;
     int err_append = Cmd -> err_append;
 
-    //implementing error redirection
-    int fderr;
-    if(errFile) {
-        if(err_append) {
-            fderr = open(errFile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-        }
-        else {
-            fderr = open(errFile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-        }
-
-        // Redirect stderr to error file
-        if (dup2(fderr, STDERR_FILENO) == -1) {
-            perror("Error redirecting stderr");
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    //Implementing cd (change directory)
+    // Implementing cd
     SimpleCommand *first_scmd = scmd[0];
     if(strcmp(first_scmd -> args[0], "cd") == 0){
         int status = ex_cd(first_scmd -> args[1]);
@@ -105,9 +88,22 @@ void execute(Command *Cmd) {
         }
         return;
     }
-    // Implementing Exit
+
+    // Implementing exit
     if(strcmp(first_scmd -> args[0], "exit") == 0){
         ex_exit();
+    }
+
+    // Set up error redirection
+    int fderr;
+    if(errFile) {
+        if(err_append) {
+            fderr = open(errFile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+        }
+        else {
+            fderr = open(errFile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        }
+        dup2(fderr, STDERR_FILENO);
     }
 
     // Set up initial input
@@ -128,7 +124,7 @@ void execute(Command *Cmd) {
     int fdout;
     for (int i = 0; i < numsimplecommands; i++) {
         // Redirect input
-        dup2(fdin, 0);
+        dup2(fdin, STDIN_FILENO);
         close(fdin);
 
         // Setup output
@@ -160,7 +156,7 @@ void execute(Command *Cmd) {
             fdin = fdpipe[0];
         }
 
-        dup2(fdout, 1); // Redirect output
+        dup2(fdout, STDOUT_FILENO); // Redirect output
         close(fdout);
 
         ret = fork();
@@ -176,9 +172,9 @@ void execute(Command *Cmd) {
         }
     }
 
-    dup2(tmpin, 0);
-    dup2(tmpout, 1);
-    dup2(tmperr, 2);
+    dup2(tmpin, STDIN_FILENO);
+    dup2(tmpout, STDOUT_FILENO);
+    dup2(tmperr, STDERR_FILENO);
 
     close(tmpin);
     close(tmpout);
