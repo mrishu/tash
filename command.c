@@ -56,9 +56,9 @@ Command *NewCmd(){
     Cmd -> inFile = NULL;
     Cmd -> outFile = NULL;
     Cmd -> errFile = NULL;
-    Cmd -> background = 0;
     Cmd -> out_append = 0;
     Cmd -> err_append = 0;
+    Cmd -> background = 0;
     return Cmd;
 }
 
@@ -72,9 +72,9 @@ void execute(Command *Cmd) {
     char *inFile = Cmd -> inFile;
     char *outFile = Cmd -> outFile;
     char *errFile = Cmd -> errFile;
-    int background = Cmd -> background;
     int out_append = Cmd -> out_append;
     int err_append = Cmd -> err_append;
+    int background = Cmd -> background;
 
     // Implementing cd
     SimpleCommand *first_scmd = scmd[0];
